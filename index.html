@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For My Alfiya ❤️</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Floating particles background -->
+    <div class="particles" aria-hidden="true"></div>
+
+    <!-- Custom heart cursor -->
+    <div class="heart-cursor" aria-hidden="true">❤</div>
+
+    <!-- Main cinematic container -->
+    <div id="app" class="app">
+      <!-- SCENE 1 — CINEMATIC LOADER -->
+      <section class="scene scene-active" id="scene-1" data-scene="1">
+        <div class="scene-inner scene-center">
+          <div class="loader-sequence">
+            <p class="loader-line">Initialising Love Engine…</p>
+            <p class="loader-line">Searching for Alfiya…</p>
+            <p class="loader-line">Analysing Smile…</p>
+            <p class="loader-line">Unlocking Heart…</p>
+            <p class="loader-line loader-line-accent">
+              Access Granted <span aria-hidden="true">❤️</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 2 — PERSONAL GREETING -->
+      <section class="scene" id="scene-2" data-scene="2">
+        <div class="scene-inner scene-center">
+          <div class="text-block text-center">
+            <h1 class="headline">Hello Alfiya…</h1>
+            <p class="subhead delay-line">
+              Yes you, my precious Butkii ❤️
+            </p>
+            <button class="btn-primary next-btn" data-next="3">
+              I’m curious… continue
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 3 — PLAYFUL IDENTITY CHECK -->
+      <section class="scene" id="scene-3" data-scene="3">
+        <div class="scene-inner scene-center">
+          <div class="card identity-card">
+            <h2 class="card-title">Wait… confirm identity first 😌</h2>
+            <p class="card-subtitle">
+              Only the real Alfiya can pass this checkpoint.
+            </p>
+            <div class="identity-options">
+              <button
+                class="btn-option"
+                data-identity="Butkii"
+                data-next="4"
+              >
+                I am Butkii 😌
+              </button>
+              <button
+                class="btn-option"
+                data-identity="Puchukudii"
+                data-next="4"
+              >
+                I am Puchukudii 😝
+              </button>
+              <button
+                class="btn-option"
+                data-identity="Kuchupuchuu"
+                data-next="4"
+              >
+                I am Kuchupuchuu 🥺
+              </button>
+            </div>
+            <p class="identity-note">
+              (Tiny hint: you are actually all three at once.)
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 4 — FIRST MEETING MEMORY -->
+      <section class="scene" id="scene-4" data-scene="4">
+        <div class="scene-inner">
+          <div class="scene-grid">
+            <div class="scene-image soft-frame">
+              <!-- Replace src with your real first-meeting photo -->
+              <img
+                src="WhatsApp Image 2026-02-27 at 3.23.42 PM.jpeg"
+                alt="Romantic couple first meeting placeholder"
+              />
+            </div>
+            <div class="scene-content">
+              <p class="scene-tag">Scene I — The First Glance</p>
+              <h2 class="headline">
+                The day I met you…
+              </h2>
+              <p class="scene-text">
+                my life stopped being normal.
+                <span class="soft-break">
+                  The world got quieter, softer, and somehow… it finally made sense.
+                </span>
+              </p>
+              <button class="btn-primary next-btn" data-next="5">
+                What happened next?
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 5 — FIRST TRIP MEMORY -->
+      <section class="scene" id="scene-5" data-scene="5">
+        <div class="scene-inner horizontal-scene">
+          <div class="scene-content">
+            <p class="scene-tag">Scene II — Our Little Escape</p>
+            <h2 class="headline">
+              The place was beautiful…
+            </h2>
+            <p class="scene-text">
+              but nothing was more beautiful than you standing beside me.
+              <span class="soft-break">
+                Every view was better because you were in it.
+              </span>
+            </p>
+            <button class="btn-primary next-btn" data-next="6">
+              Tell me more ❤️
+            </button>
+          </div>
+          <div class="scene-image special-photo-frame">
+            <!-- Replace src with a real trip photo -->
+            <img
+              src="WhatsApp Image 2026-02-27 at 3.27.03 PM.jpeg"
+              alt="Romantic couple travel placeholder"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 6 — EMOTIONAL CONFESSION -->
+      <section class="scene" id="scene-6" data-scene="6">
+        <div class="scene-inner scene-center scene-dark">
+          <div class="spotlight"></div>
+          <div class="typed-container">
+            <p class="typed-line">
+              Alfiya…
+            </p>
+            <p class="typed-line">
+              you didn’t just enter my life.
+            </p>
+            <p class="typed-line">
+              You became my peace,
+            </p>
+            <p class="typed-line">
+              my happiness,
+            </p>
+            <p class="typed-line">
+              my safest place.
+            </p>
+          </div>
+          <button class="btn-primary next-btn typed-next" data-next="7">
+            Really? 🥺
+          </button>
+        </div>
+      </section>
+
+      <!-- SCENE 7 — LOVE LETTER -->
+      <section class="scene" id="scene-7" data-scene="7">
+        <div class="scene-inner scene-center">
+          <div class="card glass-card">
+            <h2 class="card-title">A tiny love letter for you</h2>
+            <p class="typewriter" id="love-letter">
+              I don't know how you did it, Butkii… but you turned my ordinary world into something magical. If I had to choose again, in every lifetime, I would still choose you. Only you. Always you.
+            </p>
+            <button class="btn-primary next-btn" data-next="8">
+              I have something for you 🎁
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 8 — SURPRISE BUTTON -->
+      <section class="scene" id="scene-8" data-scene="8">
+        <div class="scene-inner scene-center">
+          <div class="text-center">
+            <p class="scene-tag">Tiny Trust Test</p>
+            <button class="btn-primary btn-large next-btn" data-next="9">
+              Click if you trust my love ❤️
+            </button>
+            <p class="hint-text">
+              (Your Puchukudii and Kuchupuchuu versions are also invited.)
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 9 — FUTURE PROMISES -->
+      <section class="scene" id="scene-9" data-scene="9">
+        <div class="scene-inner">
+          <div class="scene-grid-vertical">
+            <div class="scene-image special-photo-frame">
+              <img src="WhatsApp Image 2026-02-27 at 3.32.49 PM.jpeg" alt="Our forever in small pieces photo" />
+            </div>
+            <div class="promises">
+              <h2 class="headline">Our forever in small pieces</h2>
+              <p class="scene-text subtle">
+                Tap on each card, my love, to see a little promise I’m quietly making to you.
+              </p>
+              <div class="promise-grid">
+                <button
+                  class="promise-card"
+                  data-promise="home"
+                  data-title="Our Future Home"
+                >
+                  <span>Our Future Home</span>
+                </button>
+                <button
+                  class="promise-card"
+                  data-promise="trips"
+                  data-title="Our Trips"
+                >
+                  <span>Our Trips</span>
+                </button>
+                <button
+                  class="promise-card"
+                  data-promise="dreams"
+                  data-title="Our Dreams"
+                >
+                  <span>Our Dreams</span>
+                </button>
+                <button
+                  class="promise-card"
+                  data-promise="forever"
+                  data-title="Our Forever"
+                >
+                  <span>Our Forever</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Promise modal -->
+        <div class="modal-backdrop" id="promise-modal">
+          <div class="modal">
+            <h3 class="modal-title" id="modal-title"></h3>
+            <p class="modal-text" id="modal-text"></p>
+            <button class="btn-primary" id="modal-close">
+              Close
+            </button>
+            <button class="btn-secondary" id="modal-next" data-next="10">
+              Take me to the ending ✨
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 10 — ROMANTIC MEMORY CARDS -->
+      <section class="scene scene-dark" id="scene-10" data-scene="10">
+        <!-- Optional subtle scene background elements -->
+        <div class="memory-scene-bg-blur"></div>
+        <div class="scene-inner scene-center">
+          <div class="memory-scene-wrapper">
+            <div class="memory-grid">
+              
+              <!-- Card 1 -->
+              <div class="memory-card-wrapper" data-card="1">
+                <div class="memory-card">
+                  <div class="memory-card-inner">
+                    <div class="memory-card-front memory-soft-frame">
+                      <img src="WhatsApp Image 2026-02-27 at 4.03.28 PM.jpeg" alt="Romantic moment 1" />
+                      <div class="memory-gradient-overlay"></div>
+                      <button class="memory-flip-btn-integrated">Click Me ❤️</button>
+                    </div>
+                    <div class="memory-card-back">
+                      <div class="memory-text-container">
+                        <p class="memory-text">Every time I look at this moment,<br>I realise how lucky I am.<br>You didn’t just smile at me,<br>you gave my world a reason to glow.<br>My Butkii, you are my favourite memory.</p>
+                        <button class="memory-flip-back-btn">Flip Back ❤️</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="memory-card-wrapper" data-card="2">
+                <div class="memory-card">
+                  <div class="memory-card-inner">
+                    <div class="memory-card-front memory-soft-frame">
+                      <img src="WhatsApp Image 2026-02-27 at 5.49.03 PM.jpeg" alt="Romantic moment 2" />
+                      <div class="memory-gradient-overlay"></div>
+                      <button class="memory-flip-btn-integrated">Click Me ❤️</button>
+                    </div>
+                    <div class="memory-card-back">
+                      <div class="memory-text-container">
+                        <p class="memory-text">This picture reminds me<br>how peaceful life feels beside you.<br>No noise, no chaos,<br>just you, me,<br>and a forever I never want to end.</p>
+                        <button class="memory-flip-back-btn">Flip Back ❤️</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="memory-card-wrapper" data-card="3">
+                <div class="memory-card">
+                  <div class="memory-card-inner">
+                    <div class="memory-card-front memory-soft-frame">
+                      <img src="WhatsApp Image 2026-02-27 at 4.03.27 PM.jpeg" alt="Romantic moment 3" />
+                      <div class="memory-gradient-overlay"></div>
+                      <button class="memory-flip-btn-integrated">Click Me ❤️</button>
+                    </div>
+                    <div class="memory-card-back">
+                      <div class="memory-text-container">
+                        <p class="memory-text">In your eyes,<br>I found comfort.<br>In your laughter,<br>I found happiness.<br>In your presence,<br>I found home.</p>
+                        <button class="memory-flip-back-btn">Flip Back ❤️</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="memory-card-wrapper" data-card="4">
+                <div class="memory-card">
+                  <div class="memory-card-inner">
+                    <div class="memory-card-front memory-soft-frame">
+                      <img src="WhatsApp Image 2026-02-27 at 4.03.27 PM (1).jpeg" alt="Romantic moment 4" />
+                      <div class="memory-gradient-overlay"></div>
+                      <button class="memory-flip-btn-integrated">Click Me ❤️</button>
+                    </div>
+                    <div class="memory-card-back">
+                      <div class="memory-text-container">
+                        <p class="memory-text">I don’t need perfect days.<br>I only need you beside me.<br>Because even ordinary moments<br>become extraordinary<br>when they are with you, Puchukudii.</p>
+                        <button class="memory-flip-back-btn">Flip Back ❤️</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            
+            <div class="continue-wrapper">
+              <button class="btn-primary btn-large next-btn memory-continue-btn" id="memory-continue" data-next="11">
+                Continue ❤️
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 11 — FINAL CINEMATIC ENDING -->
+      <section class="scene" id="scene-11" data-scene="11">
+        <div class="scene-inner scene-center final-scene">
+          <div id="heart-rain-container" aria-hidden="true"></div>
+          <div class="final-spotlight" aria-hidden="true"></div>
+          
+          <button
+            class="music-toggle"
+            id="music-toggle"
+            aria-label="Toggle background music"
+          >
+            ♪
+          </button>
+          
+          <div class="final-text-sequence">
+            <p class="seq-line seq-1">Alfiya…</p>
+            
+            <p class="seq-line seq-2">
+              On this beautiful day,<br>
+              I just want to remind you…
+            </p>
+            
+            <div class="seq-line seq-3">
+              <p>You are my peace.</p>
+              <p>My happiness.</p>
+              <p>My safest place.</p>
+              <p>My wife.</p>
+            </div>
+            
+            <div class="seq-line seq-4 seq-final-group">
+              <p class="final-wish zoom-in-text">Happy Birthday, My Love ❤️</p>
+              <p class="final-signoff">Forever yours,<br>Your Butkii.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+   
+    <script src="script.js"></script>
+  </body>
+</html>
+
