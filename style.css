@@ -91,27 +91,59 @@ body {
 .scene {
   position: relative;
   width: 100%;
-  display: grid;
-  grid-template-rows: 0fr;
+  display: none;
+  /* Hide all by default, removes from document flow */
   opacity: 0;
   pointer-events: none;
-  transition:
-    grid-template-rows 1s ease-in-out,
-    opacity 1s ease 0.3s;
   z-index: 1;
 }
 
-.scene-inner-wrapper {
-  overflow: hidden;
-  min-height: 0;
-  width: 100%;
-}
-
-.scene.unlocked {
-  grid-template-rows: 1fr;
+.scene.active {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   opacity: 1;
   pointer-events: auto;
   z-index: 2;
+  animation: fadeInScene 800ms ease forwards;
+}
+
+.scene.fade-out {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  animation: fadeOutScene 400ms ease forwards;
+  pointer-events: none;
+}
+
+.scene-inner-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes fadeInScene {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutScene {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
 }
 
 .scene-inner {
@@ -295,7 +327,7 @@ body {
     filter 8s ease-out;
 }
 
-.scene.unlocked .soft-frame img {
+.scene.active .soft-frame img {
   transform: scale(1);
   filter: saturate(1.05) contrast(1.05);
 }
@@ -330,7 +362,7 @@ body {
   transition: transform 8s ease-out, filter 8s ease-out;
 }
 
-.scene.unlocked .special-photo-frame img {
+.scene.active .special-photo-frame img {
   transform: scale(1);
   filter: saturate(1.05) contrast(1.05);
 }

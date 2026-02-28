@@ -14,12 +14,29 @@ let currentScene = 1;
 
 function goToNextScene(nextIndex) {
   const index = typeof nextIndex === "number" ? nextIndex : currentScene + 1;
+  const currentSceneEl = $("#scene-" + currentScene);
   const nextSceneEl = $("#scene-" + index);
 
-  if (nextSceneEl && !nextSceneEl.classList.contains("unlocked")) {
-    // Unlock it to trigger the CSS grid expansion
-    nextSceneEl.classList.add("unlocked");
-    currentScene = Math.max(currentScene, index);
+  if (!nextSceneEl || index === currentScene) return;
+
+  // Fade out current scene
+  if (currentSceneEl) {
+    currentSceneEl.classList.add("fade-out");
+  }
+
+  // Wait for fade out animation (400ms defined in CSS)
+  setTimeout(() => {
+    // Hide old scene completely
+    if (currentSceneEl) {
+      currentSceneEl.classList.remove("active", "fade-out");
+    }
+
+    // Prepare and show new scene
+    nextSceneEl.classList.add("active");
+    currentScene = index;
+
+    // Instantly jump to top so long scenes don't break the cinematic feel
+    window.scrollTo(0, 0);
 
     // Trigger animations if needed
     if (index === 6 && !nextSceneEl.dataset.animated) {
@@ -36,15 +53,7 @@ function goToNextScene(nextIndex) {
       startHeartRain();
       nextSceneEl.dataset.animated = "true";
     }
-
-    // Scroll to the newly unlocked scene with a slight delay allowing DOM to expand
-    setTimeout(() => {
-      nextSceneEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-  } else if (nextSceneEl) {
-    // If it was already unlocked, just scroll to it
-    nextSceneEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  }, 400); // 400ms matches CSS fadeOutScene duration
 }
 
 // ============================
@@ -305,7 +314,7 @@ function setupMusic() {
   // Small nudge: auto-try when entering scene 11
   const observer = new MutationObserver(() => {
     const scene11 = $("#scene-11");
-    if (scene11 && scene11.classList.contains("unlocked") && !isPlaying) {
+    if (scene11 && scene11.classList.contains("active") && !isPlaying) {
       play();
     }
   });
@@ -508,9 +517,12 @@ function setupNextButtons() {
 window.addEventListener("DOMContentLoaded", () => {
   window.scrollTo(0, 0);
 
-  // Scene 1 is always unlocked first
+  // Clean up any remaining classes and set scene 1 active
+  const scenes = $$(".scene");
+  scenes.forEach(s => s.classList.remove("active", "fade-out"));
+
   const scene1 = $("#scene-1");
-  if (scene1) scene1.classList.add("unlocked");
+  if (scene1) scene1.classList.add("active");
 
   setupLoaderScene();
   setupIdentityScene();
