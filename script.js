@@ -11,38 +11,49 @@ const $$ = (selector, scope = document) =>
 // ============================
 
 let currentScene = 1;
-const totalScenes = 11;
 
-function showScene(index) {
+function setupIntersectionObserver() {
   const scenes = $$(".scene");
-  scenes.forEach((scene) => {
-    const sceneIndex = Number(scene.dataset.scene);
-    if (sceneIndex === index) {
-      scene.classList.add("scene-active");
-    } else {
-      scene.classList.remove("scene-active");
-    }
-  });
 
-  currentScene = index;
+  const observerOptions = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.25
+  };
 
-  if (currentScene === 6) {
-    startTypedLines();
-  }
-  if (currentScene === 7) {
-    startLoveLetterTypewriter();
-  }
-  if (currentScene === 11) {
-    startFinalScene();
-    startConfetti();
-    startHeartRain();
-  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        const sceneIndex = Number(entry.target.dataset.scene);
+        currentScene = Math.max(currentScene, sceneIndex);
+
+        if (sceneIndex === 6 && !entry.target.dataset.animated) {
+          startTypedLines();
+          entry.target.dataset.animated = "true";
+        }
+        if (sceneIndex === 7 && !entry.target.dataset.animated) {
+          startLoveLetterTypewriter();
+          entry.target.dataset.animated = "true";
+        }
+        if (sceneIndex === 11 && !entry.target.dataset.animated) {
+          startFinalScene();
+          startConfetti();
+          startHeartRain();
+          entry.target.dataset.animated = "true";
+        }
+      }
+    });
+  }, observerOptions);
+
+  scenes.forEach(scene => observer.observe(scene));
 }
 
 function goToNextScene(nextIndex) {
   const index = typeof nextIndex === "number" ? nextIndex : currentScene + 1;
-  if (index <= totalScenes) {
-    showScene(index);
+  const nextSceneEl = $("#scene-" + index);
+  if (nextSceneEl) {
+    nextSceneEl.scrollIntoView({ behavior: 'smooth' });
   }
 }
 
@@ -304,7 +315,7 @@ function setupMusic() {
   // Small nudge: auto-try when entering scene 11
   const observer = new MutationObserver(() => {
     const scene11 = $("#scene-11");
-    if (scene11 && scene11.classList.contains("scene-active") && !isPlaying) {
+    if (scene11 && scene11.classList.contains("is-visible") && !isPlaying) {
       play();
     }
   });
@@ -505,6 +516,8 @@ function setupNextButtons() {
 // ============================
 
 window.addEventListener("DOMContentLoaded", () => {
+  window.scrollTo(0, 0);
+  setupIntersectionObserver();
   setupLoaderScene();
   setupIdentityScene();
   setupPromises();
