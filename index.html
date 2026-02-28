@@ -42,7 +42,8 @@
             <h1 class="headline">Hello Alfiya…</h1>
             <p class="subhead delay-line">
               Yes you, my precious Butkii ❤️
-            </p>
+              
+            </p> <br>
             <button class="btn-primary next-btn" data-next="3">
               I’m curious… continue
             </button>
@@ -194,7 +195,7 @@
           <div class="card glass-card">
             <h2 class="card-title">A tiny love letter for you</h2>
             <p class="typewriter" id="love-letter">
-              I don't know how you did it, Butkii… but you turned my ordinary world into something magical. If I had to choose again, in every lifetime, I would still choose you. Only you. Always you.
+              Mujhe nahi pata tumne kaise kiya, Butkii… lekin tumne meri simple si duniya ko jaadu jaisi bana diya. Agar mujhe har zindagi mein dobara chunna pade, to main hamesha tumhe hi chununga. Sirf tum. Hamesha tum.
             </p>
             <button class="btn-primary next-btn" data-next="8">
               I have something for you 🎁
@@ -236,51 +237,86 @@
               <p class="scene-text subtle">
                 Tap on each card, my love, to see a little promise I’m quietly making to you.
               </p>
-              <div class="promise-grid">
-                <button
-                  class="promise-card"
-                  data-promise="home"
-                  data-title="Our Future Home"
-                >
-                  <span>Our Future Home</span>
-                </button>
-                <button
-                  class="promise-card"
-                  data-promise="trips"
-                  data-title="Our Trips"
-                >
-                  <span>Our Trips</span>
-                </button>
-                <button
-                  class="promise-card"
-                  data-promise="dreams"
-                  data-title="Our Dreams"
-                >
-                  <span>Our Dreams</span>
-                </button>
-                <button
-                  class="promise-card"
-                  data-promise="forever"
-                  data-title="Our Forever"
-                >
-                  <span>Our Forever</span>
+              <div class="promise-flip-grid">
+                <!-- Card 1 -->
+                <div class="promise-flip-wrapper" data-card="home">
+                  <div class="promise-flip-card">
+                    <div class="promise-flip-inner">
+                      <div class="promise-flip-front promise-soft-frame">
+                        <span class="promise-title">Our Future Home</span>
+                        <button class="promise-flip-btn">Click Me ❤️</button>
+                      </div>
+                      <div class="promise-flip-back">
+                        <div class="promise-text-container">
+                          <p class="promise-text">One day, my Butkii, we will build a little world of our own. A warm home filled with your laughter, sleepy hugs, and silly arguments that always end with you in my arms.</p>
+                          <button class="promise-flip-back-btn">Flip Back ❤️</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="promise-flip-wrapper" data-card="trips">
+                  <div class="promise-flip-card">
+                    <div class="promise-flip-inner">
+                      <div class="promise-flip-front promise-soft-frame">
+                        <span class="promise-title">Our Trips</span>
+                        <button class="promise-flip-btn">Click Me ❤️</button>
+                      </div>
+                      <div class="promise-flip-back">
+                        <div class="promise-text-container">
+                          <p class="promise-text">Every city, every beach, every random chai stop — I promise, I’ll keep choosing places where your eyes shine more than the view, and where our memories feel bigger than the destination.</p>
+                          <button class="promise-flip-back-btn">Flip Back ❤️</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="promise-flip-wrapper" data-card="dreams">
+                  <div class="promise-flip-card">
+                    <div class="promise-flip-inner">
+                      <div class="promise-flip-front promise-soft-frame">
+                        <span class="promise-title">Our Dreams</span>
+                        <button class="promise-flip-btn">Click Me ❤️</button>
+                      </div>
+                      <div class="promise-flip-back">
+                        <div class="promise-text-container">
+                          <p class="promise-text">Your dreams are my mission now. Big ones, tiny ones, even the ridiculous ‘what if’ ones — I’ll be there, cheering, pushing, holding you when it’s hard, celebrating you when it works.</p>
+                          <button class="promise-flip-back-btn">Flip Back ❤️</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="promise-flip-wrapper" data-card="forever">
+                  <div class="promise-flip-card">
+                    <div class="promise-flip-inner">
+                      <div class="promise-flip-front promise-soft-frame">
+                        <span class="promise-title">Our Forever</span>
+                        <button class="promise-flip-btn">Click Me ❤️</button>
+                      </div>
+                      <div class="promise-flip-back">
+                        <div class="promise-text-container">
+                          <p class="promise-text">In every version of tomorrow I can imagine, there is you — my Alfiya, my Butkii, my Puchukudii, my Kuchupuchuu — always next to me, slightly annoyed but deeply loved, for as long as this life lets me.</p>
+                          <button class="promise-flip-back-btn">Flip Back ❤️</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="promise-continue-wrapper">
+                <button class="btn-primary btn-large next-btn promise-continue-btn" id="promise-continue" data-next="10">
+                  Continue ❤️
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-
-        <!-- Promise modal -->
-        <div class="modal-backdrop" id="promise-modal">
-          <div class="modal">
-            <h3 class="modal-title" id="modal-title"></h3>
-            <p class="modal-text" id="modal-text"></p>
-            <button class="btn-primary" id="modal-close">
-              Close
-            </button>
-            <button class="btn-secondary" id="modal-next" data-next="10">
-              Take me to the ending ✨
-            </button>
           </div>
         </div>
       </section>
@@ -369,56 +405,34 @@
                 </div>
               </div>
               
-            </div>
-            
             <div class="continue-wrapper">
               <button class="btn-primary btn-large next-btn memory-continue-btn" id="memory-continue" data-next="11">
                 Continue ❤️
               </button>
             </div>
-          </div>
         </div>
               </div>
       </section>
 
       <!-- SCENE 11 — FINAL CINEMATIC ENDING -->
       <section class="scene" id="scene-11" data-scene="11">
-        <div class="scene-inner-wrapper">
-  
-        <div class="scene-inner scene-center final-scene">
-          <div id="heart-rain-container" aria-hidden="true"></div>
-          <div class="final-spotlight" aria-hidden="true"></div>
+        <div class="cine-spotlight" aria-hidden="true"></div>
+        <div class="cinematic-hearts-bg" id="cinematic-hearts-bg" aria-hidden="true"></div>
+        <div class="final-scene-wrapper">
+          <p class="cine-pretitle">For the most beautiful soul in my life…</p>
+          <h1 class="cine-title">Happy Birthday, <br>My Alfi ❤️ My Bubuu  <span class="heart-glow"></span></h1>
+          <h2 class="cine-subtitle">My Love. My Peace. My Forever.</h2>
           
-          <button
-            class="music-toggle"
-            id="music-toggle"
-            aria-label="Toggle background music"
-          >
-            ♪
-          </button>
-          
-          <div class="final-text-sequence">
-            <p class="seq-line seq-1">Alfiya…</p>
-            
-            <p class="seq-line seq-2">
-              On this beautiful day,<br>
-              I just want to remind you…
-            </p>
-            
-            <div class="seq-line seq-3">
-              <p>You are my peace.</p>
-              <p>My happiness.</p>
-              <p>My safest place.</p>
-              <p>My wife.</p>
-            </div>
-            
-            <div class="seq-line seq-4 seq-final-group">
-              <p class="final-wish zoom-in-text">Happy Birthday, My Love ❤️</p>
-              <p class="final-signoff">Forever yours,<br>Your Butkii.</p>
-            </div>
+          <div class="cine-para">
+            <p>On this beautiful day,</p>
+            <p>I just want you to know how deeply you are loved.</p>
+            <p>You are my calm in chaos,</p>
+            <p>my happiness in ordinary days,</p>
+            <p>and my forever in every lifetime.</p>
           </div>
+          
+          <p class="cine-signoff">Forever yours,<br>My Puchukudi</p>
         </div>
-              </div>
       </section>
     </div>
 

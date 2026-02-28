@@ -35,8 +35,10 @@ function goToNextScene(nextIndex) {
     nextSceneEl.classList.add("active");
     currentScene = index;
 
-    // Instantly jump to top so long scenes don't break the cinematic feel
-    window.scrollTo(0, 0);
+    // Instantly jump to top securely after the display: block layout calculation completes
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    });
 
     // Trigger animations if needed
     if (index === 6 && !nextSceneEl.dataset.animated) {
@@ -48,9 +50,7 @@ function goToNextScene(nextIndex) {
       nextSceneEl.dataset.animated = "true";
     }
     if (index === 11 && !nextSceneEl.dataset.animated) {
-      startFinalScene();
-      startConfetti();
-      startHeartRain();
+      startCinematicFinale();
       nextSceneEl.dataset.animated = "true";
     }
   }, 400); // 400ms matches CSS fadeOutScene duration
@@ -163,64 +163,43 @@ function startLoveLetterTypewriter() {
 // PROMISES (SCENE 9)
 // ============================
 
-const promiseCopy = {
-  home:
-    "One day, my Butkii, we will build a little world of our own. A warm home filled with your laughter, sleepy hugs, and silly arguments that always end with you in my arms.",
-  trips:
-    "Every city, every beach, every random chai stop — I promise, I’ll keep choosing places where your eyes shine more than the view, and where our memories feel bigger than the destination.",
-  dreams:
-    "Your dreams are my mission now. Big ones, tiny ones, even the ridiculous ‘what if’ ones — I’ll be there, cheering, pushing, holding you when it’s hard, celebrating you when it works.",
-  forever:
-    "In every version of tomorrow I can imagine, there is you — my Alfiya, my Butkii, my Puchukudii, my Kuchupuchuu — always next to me, slightly annoyed but deeply loved, for as long as this life lets me.",
-};
-
 function setupPromises() {
-  const cards = $$(".promise-card");
-  const modal = $("#promise-modal");
-  const modalTitle = $("#modal-title");
-  const modalText = $("#modal-text");
-  const closeBtn = $("#modal-close");
-  const nextBtn = $("#modal-next");
+  const wrappers = $$(".promise-flip-wrapper");
+  const continueWrapper = $(".promise-continue-wrapper");
+  const continueBtn = $("#promise-continue");
 
-  function openModal(kind, title) {
-    if (!modal || !modalTitle || !modalText) return;
-    modalTitle.textContent = title || "";
-    modalText.textContent = promiseCopy[kind] || "";
-    modal.classList.add("active");
-  }
+  if (!wrappers.length || !document.querySelector('#scene-9')) return;
 
-  function closeModal() {
-    if (!modal) return;
-    modal.classList.remove("active");
-  }
+  const viewedPromises = new Set();
 
-  cards.forEach((card) => {
-    card.addEventListener("click", () => {
-      const kind = card.dataset.promise;
-      const title = card.dataset.title;
-      openModal(kind, title);
-    });
+  wrappers.forEach((wrapper) => {
+    const flipBtn = $(".promise-flip-btn", wrapper);
+    const flipBackBtn = $(".promise-flip-back-btn", wrapper);
+    const cardId = wrapper.dataset.card;
+
+    if (flipBtn) {
+      flipBtn.addEventListener("click", () => {
+        wrapper.classList.add("flipped");
+        viewedPromises.add(cardId);
+
+        if (viewedPromises.size === wrappers.length && continueWrapper) {
+          continueWrapper.classList.add("continue-visible");
+        }
+      });
+    }
+
+    if (flipBackBtn) {
+      flipBackBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        wrapper.classList.remove("flipped");
+      });
+    }
   });
 
-  if (closeBtn) {
-    closeBtn.addEventListener("click", () => {
-      closeModal();
-    });
-  }
-
-  if (nextBtn) {
-    nextBtn.addEventListener("click", () => {
-      closeModal();
-      const next = Number(nextBtn.dataset.next || 10);
+  if (continueBtn) {
+    continueBtn.addEventListener("click", () => {
+      const next = Number(continueBtn.dataset.next || 10);
       goToNextScene(next);
-    });
-  }
-
-  if (modal) {
-    modal.addEventListener("click", (event) => {
-      if (event.target === modal) {
-        closeModal();
-      }
     });
   }
 }
@@ -231,51 +210,6 @@ function setupPromises() {
 
 let finalStarted = false;
 
-function startFinalScene() {
-  if (finalStarted) return;
-  finalStarted = true;
-
-  const seq1 = $(".seq-1", $("#scene-11"));
-  const seq2 = $(".seq-2", $("#scene-11"));
-  const seq3 = $(".seq-3", $("#scene-11"));
-  const seqGroup = $(".seq-final-group", $("#scene-11"));
-  const finalWish = $(".zoom-in-text", $("#scene-11"));
-
-  // 1. "Alfiya..."
-  setTimeout(() => {
-    if (seq1) seq1.classList.add("visible");
-  }, 1000);
-
-  // 1.5s pause, then hide "Alfiya..." and show "On this beautiful day..."
-  setTimeout(() => {
-    if (seq1) {
-      seq1.classList.remove("visible");
-      seq1.classList.add("hidden");
-    }
-    if (seq2) seq2.classList.add("visible");
-  }, 2500 + 1500); // 1s start + 1.5s visible + 1.5s pause
-
-  // 2s pause, hide seq2, show seq3 "You are my peace..."
-  setTimeout(() => {
-    if (seq2) {
-      seq2.classList.remove("visible");
-      seq2.classList.add("hidden");
-    }
-    if (seq3) seq3.classList.add("visible");
-  }, 5500 + 2000); // previous total + 2s
-
-  // Show final group
-  setTimeout(() => {
-    if (seq3) {
-      seq3.classList.remove("visible");
-      seq3.classList.add("hidden");
-    }
-    if (seqGroup) {
-      seqGroup.classList.add("visible");
-      if (finalWish) finalWish.classList.add("visible"); // triggers cinematic zoom
-    }
-  }, 11500 + 3500); // Accounts for all paragraphs in seq3 fading in
-}
 
 // ============================
 // BACKGROUND MUSIC
@@ -466,35 +400,6 @@ function setupMemoryCards() {
   });
 }
 
-// ============================
-// HEART RAIN
-// ============================
-
-function startHeartRain() {
-  const container = $("#heart-rain-container");
-  if (!container) return;
-
-  const pieces = 30; // Very low density so it's not chaotic
-
-  for (let i = 0; i < pieces; i += 1) {
-    const heart = document.createElement("div");
-    heart.className = "heart-particle";
-    heart.innerHTML = `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
-
-    const left = Math.random() * 100;
-    const delay = Math.random() * 15; // Staggered start widely
-    const duration = 15 + Math.random() * 15; // Extremely slow (15-30s falling)
-    const size = 15 + Math.random() * 20; // Varying sizes for depth
-
-    heart.style.left = `${left}vw`;
-    heart.style.width = `${size}px`;
-    heart.style.height = `${size}px`;
-    heart.style.animationDelay = `${delay}s`;
-    heart.style.animationDuration = `${duration}s`;
-
-    container.appendChild(heart);
-  }
-}
 
 // ============================
 // GLOBAL NEXT BUTTONS
@@ -508,6 +413,75 @@ function setupNextButtons() {
       goToNextScene(next);
     });
   });
+}
+
+// ============================
+// SCENE 11 - FINAL CINEMATIC ENDING
+// ============================
+
+function startCinematicFinale() {
+  const pretitle = $(".cine-pretitle");
+  const title = $(".cine-title");
+  const subtitle = $(".cine-subtitle");
+  const paras = $$(".cine-para p");
+  const signoff = $(".cine-signoff");
+
+  spawnCinematicHearts();
+
+  // 1. Pretitle: 500ms
+  setTimeout(() => {
+    if (pretitle) pretitle.classList.add("visible-soft");
+  }, 500);
+
+  // 2. Main Heading: 1.2s
+  setTimeout(() => {
+    if (title) title.classList.add("visible-soft");
+  }, 1200);
+
+  // 3. Subheading: 2.0s
+  setTimeout(() => {
+    if (subtitle) subtitle.classList.add("visible-soft");
+  }, 2000);
+
+  // 4. Paragraphs sequentially: Starts at 2.8s, +800ms per line
+  setTimeout(() => {
+    paras.forEach((p, index) => {
+      setTimeout(() => {
+        p.classList.add("visible-soft");
+      }, index * 800);
+    });
+  }, 2800);
+
+  // 5. Signoff: 4.0s (after paragraphs start, adjust if paras take longer) 
+  // 5 paragraphs * 800 = 4000ms. So 2800 + 4000 = 6800. Let's make it 7.5s total.
+  setTimeout(() => {
+    if (signoff) signoff.classList.add("visible-soft");
+  }, 7500);
+}
+
+function spawnCinematicHearts() {
+  const container = $("#cinematic-hearts-bg");
+  if (!container) return;
+
+  const maxHearts = 20;
+
+  for (let i = 0; i < maxHearts; i++) {
+    const heart = document.createElement("div");
+    heart.className = "cine-heart-particle";
+    heart.innerHTML = `❤️`;
+
+    const left = Math.random() * 100;
+    const delay = Math.random() * 10; // Staggered start widely
+    const duration = 15 + Math.random() * 20; // Extremely slow (15-35s falling upwards)
+    const scale = 0.5 + Math.random() * 1;
+
+    heart.style.left = `${left}vw`;
+    heart.style.transform = `scale(${scale})`;
+    heart.style.animationDelay = `${delay}s`;
+    heart.style.animationDuration = `${duration}s`;
+
+    container.appendChild(heart);
+  }
 }
 
 // ============================
