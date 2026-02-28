@@ -12,48 +12,38 @@ const $$ = (selector, scope = document) =>
 
 let currentScene = 1;
 
-function setupIntersectionObserver() {
-  const scenes = $$(".scene");
-
-  const observerOptions = {
-    root: null,
-    rootMargin: "0px",
-    threshold: 0.25
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        const sceneIndex = Number(entry.target.dataset.scene);
-        currentScene = Math.max(currentScene, sceneIndex);
-
-        if (sceneIndex === 6 && !entry.target.dataset.animated) {
-          startTypedLines();
-          entry.target.dataset.animated = "true";
-        }
-        if (sceneIndex === 7 && !entry.target.dataset.animated) {
-          startLoveLetterTypewriter();
-          entry.target.dataset.animated = "true";
-        }
-        if (sceneIndex === 11 && !entry.target.dataset.animated) {
-          startFinalScene();
-          startConfetti();
-          startHeartRain();
-          entry.target.dataset.animated = "true";
-        }
-      }
-    });
-  }, observerOptions);
-
-  scenes.forEach(scene => observer.observe(scene));
-}
-
 function goToNextScene(nextIndex) {
   const index = typeof nextIndex === "number" ? nextIndex : currentScene + 1;
   const nextSceneEl = $("#scene-" + index);
-  if (nextSceneEl) {
-    nextSceneEl.scrollIntoView({ behavior: 'smooth' });
+
+  if (nextSceneEl && !nextSceneEl.classList.contains("unlocked")) {
+    // Unlock it to trigger the CSS grid expansion
+    nextSceneEl.classList.add("unlocked");
+    currentScene = Math.max(currentScene, index);
+
+    // Trigger animations if needed
+    if (index === 6 && !nextSceneEl.dataset.animated) {
+      startTypedLines();
+      nextSceneEl.dataset.animated = "true";
+    }
+    if (index === 7 && !nextSceneEl.dataset.animated) {
+      startLoveLetterTypewriter();
+      nextSceneEl.dataset.animated = "true";
+    }
+    if (index === 11 && !nextSceneEl.dataset.animated) {
+      startFinalScene();
+      startConfetti();
+      startHeartRain();
+      nextSceneEl.dataset.animated = "true";
+    }
+
+    // Scroll to the newly unlocked scene with a slight delay allowing DOM to expand
+    setTimeout(() => {
+      nextSceneEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  } else if (nextSceneEl) {
+    // If it was already unlocked, just scroll to it
+    nextSceneEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
 
@@ -315,7 +305,7 @@ function setupMusic() {
   // Small nudge: auto-try when entering scene 11
   const observer = new MutationObserver(() => {
     const scene11 = $("#scene-11");
-    if (scene11 && scene11.classList.contains("is-visible") && !isPlaying) {
+    if (scene11 && scene11.classList.contains("unlocked") && !isPlaying) {
       play();
     }
   });
@@ -517,7 +507,11 @@ function setupNextButtons() {
 
 window.addEventListener("DOMContentLoaded", () => {
   window.scrollTo(0, 0);
-  setupIntersectionObserver();
+
+  // Scene 1 is always unlocked first
+  const scene1 = $("#scene-1");
+  if (scene1) scene1.classList.add("unlocked");
+
   setupLoaderScene();
   setupIdentityScene();
   setupPromises();
